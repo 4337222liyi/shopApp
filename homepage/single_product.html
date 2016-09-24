@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		
+		<!--App自定义的css-->
+		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+
+        <script src="../js/common.js"></script>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+			 
+		 <!--	<div class="mui-content-padded"">  
+			  <div style="width:100%;height:150px;">
+					<img src="http://www.jiujichina.com:8088/file/20160703/9cb800a1a5e34ba5b23ef4f6809a3cb2.jpg" data-preview-src="" width="100%" height="150px" data-preview-group="1" />
+				</div>  
+				<div style="float:left;width:100%;height:130px;margin:5px 0px;border:0px solid white;font-size: 14px;background:rgb(225,225,225)">
+					<div style="font-size:16px;">笙条具有丰富的营养价值，除含有钙、钾、硒、锌、锗等微量元素和人体所需17种氨基酸外，还含有丰富的维生素。</div>
+			        <div style="margin-top:10px;">本站价 :<span style="color:red">¥3</span>   价格：<span style="color:red">¥10</span> </div>
+			        <div style="margin-top:10px;"><span>数量: 1000 </span> 运费: <span style="color:red"> ¥10 </span></div>
+				</div>  
+				
+				<div class="mui-row" style="float:left;width:100%;margin:5px 0px;border:0px solid white;font-size: 14px;background:rgb(225,225,225)">
+					<div  class="mui-btn" style="font-size:16px;"><span onclick="shareShow()">分享</span></div>
+					<div  class="mui-btn" style="font-size:16px;"><span>赞</span></div>
+			     </div>  
+			</div>  -->
+			 
+		</div>
+		
+		<nav class="mui-bar mui-bar-tab">
+			<a id="shouchang"   class="mui-tab-item shouchang" href="javascript:void(0)" onclick="shouchang(this)">
+				<span  style="font-size:14px;"><i class="mui-icon mui-icon-star"></i></span>
+			</a>
+			<a class="mui-tab-item" href="#"  style="background:rgb(231,179,37);">
+				<span style="font-size:14px;">加入购物车</span>
+			</a> 
+			<a class="mui-tab-item" href="#forward" style="background:red;">
+				<span style="font-size:14px;">立即购买</span>
+			</a>
+		</nav>
+		
+		<div id="delete" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#" style="color: #FF3B30;">删除信息</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#delete"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+		
+	  
+      <!--  <div id="output">
+                 Share模块管理客户端的社交分享功能，提供调用终端社交软件的分享能力。通过plus.share可获取社交分享管理对象。
+		</div>  -->
+		
+	</body>
+	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.zoom.js"></script> 
+	<script src="../js/mui.previewimage.js"></script>
+	 
+	<script>
+		
+		var F_USER_ID;
+		var F_PRODUCT_ID;
+		var shares=null;
+		var product;
+			 
+		mui.previewImage();
+		
+			mui.init({
+				keyEventBind: {
+					backbutton: true  //关闭back按键监听
+				}
+	        });
+	        
+		mui.plusReady(function() {
+			
+			   updateSerivces();
+			
+				// console.log("当前页面URL："+plus.webview.currentWebview().getURL());
+				var self = plus.webview.currentWebview();
+	            F_PRODUCT_ID = self.F_PRODUCT_ID;   
+	            F_USER_ID =  localStorage.getItem("F_USER_ID");
+	            
+				var muiContent = $(".mui-content"); 
+				 $(".mui-title").text(name);
+	            $.ajax('http://www.jiujichina.com/shopConsole/tbProductController/mobileProductById.do',{
+				// $.ajax('http://192.168.1.102:8080/shopConsole/tbProductController/mobileProductById.do',{
+				    data:{F_PRODUCT_ID:F_PRODUCT_ID},
+					dataType:'jsonp',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒； 
+					 jsonp: "callbackparam", 
+					 jsonpCallback: "success_jsonpCallback",
+					success:function(data){    
+						 product = data;
+						 muiContent.append(createContent(data)); 
+			       }
+		        }); 
+		          
+		    });
+		    
+		    mui(".mui-bar-tab").on('tap','.shouchang',function(e){  
+                     //点击响应逻辑  
+                 shouchang($(this)); 
+              });
+		    
+		    var createContent = function(ele) {  
+		    	    //console.info(ele); 
+					//var fragment = document.createDocumentFragment();
+					var fatherDiv =  document.createElement('div');
+					//div.className = 'mui-content-padded';
+					fatherDiv.style.marginBottom="150px";
+					fatherDiv.style.padding="2px";   
+					var div = document.createElement('div');
+					 
+					var desc = ele.F_PRODUCTDESC.substring(0,40);
+					 
+				
+				div.innerHTML = '<div style="width:100%;height:150px;">'
+					+'<img src="http://www.jiujichina.com:8088/file/'+ele.PATH+'" data-preview-src="" width="100%" height="150px" data-preview-group="1" />'
+				+'</div>'
+				+'<div style="float:left;width:100%;height:130px;margin:5px 0px;border:0px solid white;font-size: 14px;background:rgb(225,225,225)">'
+					+'<div style="font-size:16px;">'+desc+'</div>'
+			        +'<div style="margin-top:10px;">本站价 :<span style="color:red">¥3</span>   价格：<span style="color:red">¥'+ele.F_PRICE+'</span> </div>'
+			        +'<div style="margin-top:10px;"><span>数量: 1000 </span> 运费: <span style="color:red"> ¥10 </span></div>'
+				+'</div>'
+				
+				+'<div class="mui-row" style="float:left;width:100%;margin:5px 0px;border:0px solid white;font-size: 14px;background:rgb(225,225,225)">'
+					+'<div  class="mui-btn" style="font-size:16px;"><span onclick="shareShow()">分享</span></div>'
+					+'<div  class="mui-btn" style="font-size:16px;"><span>赞</span></div>'
+			     +'</div> '; 
+			     
+					//fragment.appendChild(div);  
+					//return fragment; 
+					fatherDiv.appendChild(div);
+					// console.log(fatherDiv.innerHTML);
+					return fatherDiv;
+		 };   
+		 
+	
+		 
+		  function shouchang(x){
+				 	if($(x).find("i").hasClass("mui-icon-star-filled")){
+				 		$(x).find("i").removeClass("mui-icon-star-filled");
+				 		$(x).find("i").addClass("mui-icon-star");
+				 		operatShouchang("delete",F_PRODUCT_ID,F_USER_ID);
+				 	}else{
+				 		$(x).find("i").removeClass("mui-icon-star");
+				 		$(x).find("i").addClass("mui-icon-star-filled");
+				 		
+				 		operatShouchang("add",F_PRODUCT_ID,F_USER_ID);
+				 	}
+				     console.info($(x).find("i"));   
+		 }
+		 
+		 function operatShouchang(LABEL,F_PRODUCT_ID,F_USER_ID){
+		 	console.info("F_PRODUCT_ID:"+F_PRODUCT_ID+"F_USER_ID"+F_USER_ID);
+		 	   $.ajax('http://www.jiujichina.com/shopConsole/tbShouchangController/mobileListAdd.do',{
+			  //	 $.ajax('http://192.168.1.103:8080/shopConsole/tbShouchangController/mobileListAdd.do',{
+				    data:{LABEL:LABEL,F_PRODUCT_ID:F_PRODUCT_ID,F_USER_ID:F_USER_ID},
+					dataType:'jsonp',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒； 
+					 jsonp: "callbackparam", 
+					 jsonpCallback: "success_jsonpCallback",
+					 success:function(data){    
+						  
+			        }
+		        }); 
+		 }
+		 
+		 // 打开分享
+		function shareShow(){
+			var shareBts=[];
+			// 更新分享列表
+			var ss=shares['weixin'];
+			if(navigator.userAgent.indexOf('StreamApp')<0&&navigator.userAgent.indexOf('qihoo')<0){  //在360流应用中微信不支持分享图片
+				ss&&ss.nativeClient&&(shareBts.push({title:'微信朋友圈',s:ss,x:'WXSceneTimeline'}),
+				shareBts.push({title:'微信好友',s:ss,x:'WXSceneSession'}));
+			}
+			ss=shares['sinaweibo'];
+			ss&&shareBts.push({title:'新浪微博',s:ss});
+			ss=shares['qq'];
+			ss&&ss.nativeClient&&shareBts.push({title:'QQ',s:ss});
+			// 弹出分享列表
+			shareBts.length>0?plus.nativeUI.actionSheet({title:'分享',cancel:'取消',buttons:shareBts},function(e){
+				(e.index>0)&&shareAction(shareBts[e.index-1],true);
+			}):plus.nativeUI.alert('当前环境无法支持分享操作!');
+		}
+		
+	   /**
+	   * 分享操作
+	   * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+	   * @param {Boolean} bh 是否分享链接
+	   */
+		function shareAction(sb,bh) {
+			console.info( "分享操作：" );
+			if(!sb||!sb.s){
+				console.info( "无效的分享服务！" );
+				//outLine( "无效的分享服务！");
+				return;
+			}
+			var msg={content:product.F_PRODUCTDESC,extra:{scene:sb.x}};
+			//var msg={content:sharecontent.value,extra:{scene:sb.x}};
+			if(bh){
+				msg.href="http://www.jiujichina.com/jiuji/productCtrl/toSingleProduct.do?f_ProductId="+F_PRODUCT_ID;
+				msg.title="欢迎来到啾唧网";
+				/*msg.href=sharehref.value;
+				if(sharehrefTitle&&sharehrefTitle.value!=""){
+					msg.title=sharehrefTitle.value;
+				}
+				if(sharehrefDes&&sharehrefDes.value!=""){
+					msg.content=sharehrefDes.value;
+				}*/
+				msg.thumbs=["http://www.jiujichina.com:8088/file/"+product.PATH];
+				msg.pictures=["http://www.jiujichina.com:8088/file/"+product.PATH];
+			}else{
+				//if(pic&&pic.realUrl){
+				//	msg.pictures=[pic.realUrl];
+				//}
+			}
+			// 发送分享
+			if ( sb.s.authenticated ) {
+				console.info( "---已授权---" );
+				//outLine("---已授权---" );
+				shareMessage(msg,sb.s);
+			} else {
+				console.info( "---未授权---" );
+				//outLine("---未授权---"); 
+				sb.s.authorize( function(){
+						shareMessage(msg,sb.s);
+					},function(e){
+					console.info( "认证授权失败："+e.code+" - "+e.message );
+				});
+			}
+		}
+		
+	   /**
+	   * 发送分享消息
+	   * @param {JSON} msg
+	   * @param {plus.share.ShareService}
+	   */
+		function shareMessage(msg,s){
+			 plus.nativeUI.showWaiting();  
+			console.info(JSON.stringify(msg));
+			s.send( msg, function(){
+				 plus.nativeUI.closeWaiting();  
+				  mui.toast("分享到\""+s.description+"\"成功！ ");
+				console.info( "分享到\""+s.description+"\"成功！ " );
+				//outLine("分享到\""+s.description+"\"成功！ " );
+			}, function(e){
+				 plus.nativeUI.closeWaiting();  
+				 mui.toast("分享到\""+s.description+"\"失败: "+JSON.stringify(e) );
+				console.info( "分享到\""+s.description+"\"失败: "+JSON.stringify(e) );
+			     //outLine("分享到\""+s.description+"\"失败: "+JSON.stringify(e));
+			} );
+		}
+		
+		/**
+		 * 更新分享服务
+		 */
+		function updateSerivces(){
+			plus.share.getServices( function(s){
+				shares={};
+				for(var i in s){
+					var t=s[i];
+					shares[t.id]=t;
+				}
+			}, function(e){
+				console.info( "获取分享服务列表失败："+e.message );
+				//outLine("获取分享服务列表失败："+e.message );
+			} ); 
+			//outLine("获取分享服务列表成功：");
+		}
+ 
+		
+	</script>
+
+</html>

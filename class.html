@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<script src="./js/common.js"></script>
+	</head>
+	 
+	 <script type="text/javascript">
+var pushServer = "http://demo.dcloud.net.cn/push/?";
+var message = null;
+// 监听plusready事件  
+document.addEventListener( "plusready", function(){
+	message = document.getElementById("message");
+	// 监听点击消息事件
+	plus.push.addEventListener( "click", function( msg ) {
+		// 判断是从本地创建还是离线推送的消息
+		switch( msg.payload ) {
+			case "LocalMSG":
+				//outSet( "点击本地创建消息启动：" );
+			break;
+			default:
+				////outSet( "点击离线推送消息启动：");
+			break;
+		}
+		// 提示点击的内容
+		plus.nativeUI.alert( msg.content );
+		// 处理其它数据
+		logoutPushMsg( msg );
+	}, false );
+	// 监听在线消息事件
+	plus.push.addEventListener( "receive", function( msg ) {
+		if ( msg.aps ) {  // Apple APNS message
+			//outSet( "接收到在线APNS消息：" );
+		} else {
+			//outSet( "接收到在线透传消息：" );
+		}
+		logoutPushMsg( msg );
+	}, false );
+}, false );
+
+/**
+ * 日志输入推送消息内容
+ */
+function logoutPushMsg( msg ) {
+	//outLine( "title: "+msg.title );
+	//outLine( "content: "+msg.content );
+	if ( msg.payload ) {
+		if ( typeof(msg.payload)=="string" ) {
+			//outLine( "payload(String): "+msg.payload );
+		} else {
+			//outLine( "payload(JSON): "+JSON.stringify(msg.payload) );
+		}
+	} else {
+		//outLine( "payload: undefined" );
+	}
+	if ( msg.aps ) {
+		//outLine( "aps: "+JSON.stringify(msg.aps) );
+	}
+}
+
+/**
+ * 获取本地推送标识信息
+ */
+function getPushInfo(){
+	var info = plus.push.getClientInfo();
+	//outSet( "获取客户端推送标识信息：" );
+	//outLine( "token: "+info.token );
+	//outLine( "clientid: "+info.clientid );
+	//outLine( "appid: "+info.appid );
+	//outLine( "appkey: "+info.appkey );
+}
+
+</script>
+   <style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+    </style>
+	<body>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/mui.min.js"></script> 
+		<script type="text/javascript">
+			mui.init();
+		</script>
+		
+			<div class="mui-content">
+				
+				<div class="mui-collapse-content">
+							<div id="slider" class="mui-slider" style="height:100px">
+								<div class="mui-slider-group mui-slider-loop">
+									<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+									<div class="mui-slider-item mui-slider-item-duplicate">
+										<a href="#">
+											<img src="./images/banner3.jpg">
+										</a>
+									</div>
+									<!-- 第一张 -->
+									<div class="mui-slider-item">
+										<a href="#">
+											<img src="./images/banner1.jpg">
+										</a>
+									</div>
+									<!-- 第二张 -->
+									<div class="mui-slider-item">
+										<a href="#">
+											<img src="./images/banner2.jpg">
+										</a>
+									</div>
+									<!-- 第三张 -->
+									<div class="mui-slider-item">
+										<a href="#">
+											<img src="./images/banner3.jpg">
+										</a>
+									</div> 
+									<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+									<div class="mui-slider-item mui-slider-item-duplicate">
+										<a href="#">
+											<img src="./images/banner1.jpg">
+										</a>
+									</div>
+								</div>
+								<div class="mui-slider-indicator">
+									<div class="mui-indicator mui-active"></div>
+									<div class="mui-indicator"></div>
+									<div class="mui-indicator"></div>
+									<div class="mui-indicator"></div>
+								</div>
+							</div>
+						</div>
+						
+		        <ul id="classType" class="mui-table-view mui-grid-view mui-grid-9">
+		<!--        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a id="info" href="javascript:void(0)">
+		                    <span class="mui-icon  iconfont icon-shuiguo"></span>
+		                    <div class="mui-media-body">生鲜水果</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="product_list.html">
+		                    <span class="mui-icon iconfont  icon-shucai"></span>
+		                    <div class="mui-media-body">新鲜蔬菜</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+		            	<a href="#">
+		                    <span class="mui-icon iconfont icon-xiaoshumiao"></span>
+		                    <div class="mui-media-body"绿化苗木</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon iconfont icon-shuichan"></span>
+		                    <div class="mui-media-body">畜牧水产</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon iconfont icon-nongfuchanpin"></span>
+		                    <div class="mui-media-body">农副产品</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon iconfont icon-liangyou"></span>
+		                    <div class="mui-media-body">米面粮油</div></a></li>
+		            <li class="mui-table-view-cell mui- mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon iconfont icon-nongchanpin"></span>
+		                    <div class="mui-media-body">农资产品</div></a></li>   -->
+		        </ul> 
+		        
+		        <div class="mui-collapse-content">
+							<div id="slider" class="mui-slider">
+								<div id="slider-hot" class="" style="width:100%;text-align:center;margin:0 10px;"> 
+									<!-- 第一张 -->
+								<!--	 <div class="mui-slider-item"    style="float:left;width:33%;background: white;">
+										<a href="#">
+											<img src="./images/shuijiao.jpg" height="200px"  width="85%"> 
+										 </a>
+										<div><span>RMB:1</span></div>
+									</div> 
+								 	<div class="mui-slider-item"  style="float:left;width:33%;">
+										<a href="#">
+											<img src="./images/muwu.jpg" height="200px" width="85%">
+										</a>
+									</div> 
+									<div class="mui-slider-item"  style="float:left;width:33%;"> 
+										<a href="#">
+											<img src="./images/cbd.jpg" height="200px" width="85%">
+										</a>
+									</div>  -->
+								</div> 
+							</div>
+						</div>
+		</div>
+		
+		
+	  
+	</body>
+	
+	<script>
+
+		
+		//$.ajax('http://192.168.1.104:8080/shopConsole/tbProductController/mobileProductHot.do',{ 
+		$.ajax('http://www.jiujichina.com/shopConsole/tbProductController/mobileProductHot.do',{
+					data:'',
+					dataType:'jsonp',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒； 
+					 jsonp: "callbackparam", 
+					 jsonpCallback: "success_jsonpCallback",
+					success:function(data){  
+						var muiTableView = $("#slider-hot");
+					 	muiTableView.empty();
+						data.forEach(function(ele,index){
+							 console.log(ele);  
+								   var itemDiv = '<div class="mui-slider-item"    style="float:left;width:33%;background:white;">'
+									+'	<a href="javascript:void(0)" onclick="openSingleProduct('+ele.F_PRODUCT_ID+')">'
+									+'	<img src="http://www.jiujichina.com:8088/file/'+ele.F_PATH+'" height="200px"  width="85%">'
+									+'	</a>'
+									+' <div><span>RMB:'+ele.F_PRICE+'</span></div>'
+									+'</div>';
+								 muiTableView.append(itemDiv); 
+						});
+					}
+		});
+		
+		 $.ajax('http://www.jiujichina.com/shopConsole/goodClass/mobileListAll.do',{
+			data:'',
+			dataType:'jsonp',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒； 
+			 jsonp: "callbackparam", 
+			 jsonpCallback: "success_jsonpCallback_1",
+			success:function(data){  
+				var muiTableView = $("#classType");
+				muiTableView.empty();
+				data.forEach(function(ele,index){
+					//console.log(ele);
+					if(ele.pId=='0'){
+						//console.log(ele);
+					   	var li=$('<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a class="info" href="javascript:openProductList(\''+ele.id+'\',\''+ele.name+'\')">  <span class="mui-icon  iconfont '+ele.F_ICON+'"></span> <div class="mui-media-body">'+ele.name+'</div></a></li>');
+					     muiTableView.append(li);
+					}
+				});
+			}
+		});
+		
+
+
+
+      function openProductList(id,sname){ 
+      	 //打开关于页面
+			  mui.openWindow({
+			    url: './homepage/product_list.html', 
+			    id:'./homepage/product_list.html',
+			    extras:{
+			        uid:id,
+			        name:sname
+			    }
+			  });
+      } 
+      
+      function openSingleProduct(id){  
+			//console.info(name);
+      	      //打开关于页面
+			  mui.openWindow({
+			    url: './homepage/single_product.html', 
+			    id:'./homepage/single_product.html',
+			    extras:{
+			        F_PRODUCT_ID:id,
+			        name:name
+			    }
+			  });
+         } 
+	</script>
+
+</html>

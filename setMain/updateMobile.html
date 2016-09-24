@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">修改绑定手机号码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				 
+						<div class="mui-collapse-content">
+							<form class="mui-input-group">
+								<div class="mui-input-row">
+									<label>原手机号</label>
+									<input type="text" placeholder="请输入原手机号">
+								</div>
+								<div class="mui-input-row">
+									<label>新手机号</label>
+									<input type="text" class="mui-input-clear" placeholder="请输入新手机号">
+								</div>
+		
+								 
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-primary" type="button" onclick="submit()">确认</button>&nbsp;&nbsp;
+									<button class="mui-btn mui-btn-primary" type="button" onclick="return false;">取消</button>
+								</div>
+							</form>
+						</div> 
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
+			
+			function submit(){
+				 //$.ajax('http://192.168.1.102:8080/shopConsole/tbUserController/mobileUpdateMobile.do',{
+			    $.ajax('http://www.jiujichina.com/shopConsole/tbUserController/mobileUpdateMobile.do',{
+						data:{F_USER_ID:F_USER_ID},
+						dataType:'jsonp',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒； 
+						 jsonp: "callbackparam", 
+						 jsonpCallback: "success_jsonpCallback",
+						success:function(data){   
+							console.info(data.F_NickName); 
+				       }
+			   }); 
+			}
+			
+		 
+		</script>
+	</body>
+
+</html>

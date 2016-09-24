@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css"> 
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<style type="text/css">
+			p {
+				text-indent: 22px;
+			}
+			.des {
+				margin: .5em 0;
+			}
+			.des>li {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a   class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">生鲜水果 </h1>
+		</header>
+		
+		<div class="mui-content">
+			
+			<div class="mui-content-padded">
+				 
+			</div>
+			<ul id="list" class="mui-table-view mui-table-view-chevron">
+ 			<!--<li>
+ 				<a  href="single_product.html" class="mui-navigate-right">
+ 					<span class="mui-icon iconfont icon-shuichan"></span>
+ 					 <div class="mui-media-body"><p class="mui-ellipsis">dfsd</p></div>
+ 				</a>
+ 		   </li>-->
+
+			</ul>
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/mui.min.js "></script>
+
+	<script>
+		mui.init();
+		
+			mui.plusReady(function() {
+				// console.log("当前页面URL："+plus.webview.currentWebview().getURL());
+				 
+				var list = document.getElementById("list");
+				var self = plus.webview.currentWebview();
+	            var uid = self.uid; 
+	            var topicName = self.name;
+	            $(".mui-title").text(topicName);
+				
+	            $.ajax('http://www.jiujichina.com/shopConsole/goodClass/mobileListSon.do',{
+					data:{F_ClsId:uid},
+					dataType:'jsonp',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒； 
+					 jsonp: "callbackparam", 
+					 jsonpCallback: "success_jsonpCallback",
+					success:function(data){   
+						data.forEach(function(ele,index){
+							list.appendChild(createFragment(ele));
+						});
+			       }
+		        }); 
+		         
+		    });
+		
+		var createFragment = function(ele) { 
+			if(ele.F_ICON==undefined){
+				ele.F_ICON='icon-taozi';
+			}
+			//console.log(ele.fClsName);
+			var fragment = document.createDocumentFragment();
+			var li1 = document.createElement('li');
+			li1.className = 'mui-table-view-cell mui-media';
+			li1.innerHTML = '<a  href="javascript:openSingleProduct('+ele.F_ClsId+',\''+ele.fClsName+'\')" class="mui-navigate-right"><span class="mui-icon iconfont '+ele.F_ICON+'"></span><div class="mui-media-body"><p class="mui-ellipsis">'+ele.fClsName+'</p></div></a>';
+			fragment.appendChild(li1);  
+			return fragment;
+			
+		};
+		
+		function openSingleProduct(id,name){ 
+			//console.info(name);
+      	 //打开关于页面
+			  mui.openWindow({
+			    url: 'product_list_two.html', 
+			    id:'product_list_two.html',
+			    extras:{
+			        F_ClsId:id,
+			        name:name
+			    }
+			  });
+         } 
+	
+	</script>
+
+</html>

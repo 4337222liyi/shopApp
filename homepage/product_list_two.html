@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		
+		<!--App自定义的css-->
+		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">笙条</h1>
+		</header>
+		<div class="mui-content">
+			 
+		 <!--	<div class="mui-content-padded">  
+				<div style="float:left;width:40%;height:150px;">
+					<img src="http://www.jiujichina.com:8088/file/20160703/9cb800a1a5e34ba5b23ef4f6809a3cb2.jpg" data-preview-src="" width="100%" height="150px" data-preview-group="1" />
+				</div>  
+				<div style="float:left;width:58%;height:150px;margin-left:2px;border:1px solid white;padding: 4px;font-size: 14px;">
+					<div>笙条具有丰富的营养价值，除含有钙、钾、硒、锌、锗等微量元素和人体所需17种氨基酸外，还含有丰富的维生素。</div>
+			        <div style="margin-top:10px;">价格：<span style="color:red">¥10 </span> 本站价 :<span style="color:red">¥3</span>  </div>
+			        <div style="margin-top:5px;"><span>数量: 1000 </span> 运费: <span style="color:red"> ¥10 </span></div>
+				</div>  
+			</div> -->
+			 
+		</div>
+	</body>
+	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.zoom.js"></script>
+	<script src="../js/mui.previewimage.js"></script>
+	<script>
+		mui.previewImage();
+		
+		mui.plusReady(function() {
+				// console.log("当前页面URL："+plus.webview.currentWebview().getURL());
+				  
+				var self = plus.webview.currentWebview();
+	            var F_ClsId = self.F_ClsId;  
+	            var name = self.name; 
+				var muiContent = $(".mui-content"); 
+				 $(".mui-title").text(name);
+	           $.ajax('http://www.jiujichina.com/shopConsole/tbProductController/mobileListByClassId.do',{
+				// $.ajax('http://192.168.1.102:8080/shopConsole/tbProductController/mobileListByClassId.do',{
+				    data:{F_ClsId:F_ClsId},
+					dataType:'jsonp',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒； 
+					 jsonp: "callbackparam", 
+					 jsonpCallback: "success_jsonpCallback",
+					success:function(data){   
+						data.forEach(function(ele,index){ 
+							muiContent.append(createContent(ele));
+						});
+			       }
+		        }); 
+		         
+		    });
+		    
+		    var createContent = function(ele) { 
+		    	    //console.info(ele); 
+					//var fragment = document.createDocumentFragment();
+					var fatherDiv =  document.createElement('div');
+					//div.className = 'mui-content-padded';
+					fatherDiv.style.marginBottom="150px";
+					fatherDiv.style.padding="2px";   
+					fatherDiv.setAttribute("onclick","openSingleProduct("+ele.F_PRODUCT_ID+")");
+					var div = document.createElement('div'); 
+					
+			/*		div.innerHTML = '<p><img src="./images/1.jpg" data-preview-src="" data-preview-group="1" /></p>'
+					+'<p>价格：¥'+ele.F_PRICE+'数量: 1000 运费: ¥10  本站价 : ¥3 </p> '
+				    +'<p>'+ele.F_PRODUCTDESC+'</p>'
+			        +'<div class="mui-content-padded" align="center"><span class="mui-btn mui-btn-success" >'
+					+'提交订单信息</span></div>';*/
+					var desc = ele.F_PRODUCTDESC.substring(0,40);
+					 
+				   div.innerHTML = '<div style="float:left;width:40%;height:150px;">'
+					+'<img src="http://www.jiujichina.com:8088/file/'+ele.PATH+'" data-preview-src="" width="100%" height="150px" data-preview-group="1" />'
+				   +'</div>'
+				   +'<div style="float:left;width:55%;height:150px;margin-left:2px;border:1px solid white;padding: 4px;font-size: 14px;">'
+					+'<div>'+desc+'</div>'
+			        +'<div style="margin-top:10px;">价格：<span style="color:red">¥'+ele.F_PRICE+' </span> 本站价 :<span style="color:red">¥3</span>  </div>'
+			        +'<div style="margin-top:5px;"><span>数量: 1000 </span> 运费: <span style="color:red"> ¥10 </span></div>'
+				    +'</div>';  
+				   
+					//fragment.appendChild(div);  
+					//return fragment; 
+					fatherDiv.appendChild(div);
+				  //console.log(fatherDiv.innerHTML);
+					return fatherDiv;
+		 };
+		 
+		 function openSingleProduct(id){  
+			//console.info(name);
+      	      //打开关于页面
+			  mui.openWindow({
+			    url: 'single_product.html', 
+			    id:'single_product.html',
+			    extras:{
+			        F_PRODUCT_ID:id,
+			        name:name
+			    }
+			  });
+         } 
+		    
+	</script>
+
+</html>
